@@ -44,3 +44,23 @@ IRB.start
 
 ```
 </details>
+
+## Produce an event on kafka
+
+Create a Gemfile to manage your dependencies.
+Add ruby-kafka.
+
+<details>
+  <summary>Solution</summary>
+
+```sh
+touch Gemfile
+```
+
+```ruby
+source 'https://rubygems.org'
+
+gem 'ruby-kafka'
+
+```
+</details>
