@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-puts 'Hello World'
+require 'irb'
+
+IRB.start

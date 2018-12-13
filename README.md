@@ -12,6 +12,7 @@ Display `hello world` with an executable ruby file.
 ```sh
 mkdir bin
 touch bin/console.rb
+chmod +x bin/console.rb
 ```
 
 In `bin/console.rb`.
@@ -23,3 +24,23 @@ puts 'Hello World'
 ```
 </details>
 
+Launch a ruby console with an executable ruby file.
+
+<details>
+  <summary>Solution</summary>
+
+```sh
+mkdir bin
+touch bin/console.rb
+```
+
+In `bin/console.rb`.
+```ruby
+#!/usr/bin/env ruby
+
+require 'irb'
+
+IRB.start
+
+```
+</details>
