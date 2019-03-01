@@ -148,3 +148,22 @@ volumes:
 ```
 
 </details>
+
+Initialize a kafka client with brokers, client_id and logger.
+Deliver message to kafka client with 'coucou' topic.
+Consume message from kafka client on 'coucou' topic.
+See https://github.com/zendesk/ruby-kafka/
+
+<details>
+  <summary>Solution</summary>
+
+```ruby
+require 'kafka'
+
+kafka = Kafka.new(['localhost:9092'], client_id: 'KafkaProject', logger: Logger.new(STDOUT))
+kafka.deliver_message('Hello word!', topic: 'coucou')
+kafka.each_message(topic: "coucou") { |m| puts m.value }
+
+```
+
+</details>
