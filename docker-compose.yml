@@ -1,83 +1,5 @@
-# Kafka project
-
-Describe how to use kafka and implement a pub/sub pattern with ruby app.
-
-## Create executable file
-
-Display `hello world` with an executable ruby file.
-
-<details>
-  <summary>Solution</summary>
-
-```sh
-mkdir bin
-touch bin/console.rb
-chmod +x bin/console.rb
-```
-
-In `bin/console.rb`.
-```ruby
-#!/usr/bin/env ruby
-
-puts 'Hello World'
-
-```
-</details>
-
-Launch a ruby console with an executable ruby file.
-
-<details>
-  <summary>Solution</summary>
-
-```sh
-mkdir bin
-touch bin/console.rb
-```
-
-In `bin/console.rb`.
-```ruby
-#!/usr/bin/env ruby
-
-require 'irb'
-
-IRB.start
-
-```
-</details>
-
-## Produce an event on kafka
-
-Create a Gemfile to manage your dependencies.
-Add ruby-kafka.
-
-<details>
-  <summary>Solution</summary>
-
-```sh
-touch Gemfile
-```
-
-```ruby
-source 'https://rubygems.org'
-
-gem 'ruby-kafka'
-
-```
-</details>
-
-Create a `docker-compose.yml` file to run a kafka client into docker.
-
-<details>
-  <summary>Solution</summary>
-
-```sh
-touch docker-compose.yml
-```
-
-```yml
 version: '3'
 services:
-  # To manage distributed system
   zookeeper:
     image: zookeeper:3.4.9
     restart: unless-stopped
@@ -110,8 +32,6 @@ services:
     depends_on:
       - zookeeper
 
-  # Dependency for kafka rest
-  # To manage avro schema
   kafka-schema-registry:
     image: confluentinc/cp-schema-registry:5.0.0
     hostname: kafka-schema-registry
@@ -125,7 +45,6 @@ services:
       - zookeeper
       - kafka1
 
-  # To manage topics and partitions
   kafka-rest-proxy:
     image: confluentinc/cp-kafka-rest:5.0.0
     hostname: kafka-rest-proxy
@@ -145,6 +64,3 @@ services:
 volumes:
   data:
     driver: local
-```
-
-</details>
