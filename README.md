@@ -211,3 +211,41 @@ IRB.start
 ```
 
 </details>
+
+## Create a consumer task
+
+Launch a consumer with ruby executable file
+
+<details>
+  <summary>Solution</summary>
+
+```sh
+touch bin/consumer.rb
+chmod +x bin/consumer.rb
+``` 
+
+In bin/consumer.rb
+```ruby
+#!/usr/bin/env ruby
+
+require 'kafka'
+
+kafka = Kafka.new(['localhost:9092'])
+
+consumer = kafka.consumer(group_id: 'KafkaProject-group')
+
+consumer.subscribe('coucou')
+consumer.subscribe('cool')
+
+trap('TERM') { consumer.stop }
+
+logger = Logger.new(STDOUT)
+
+consumer.each_message do |message|
+  logger.info(message.topic)
+  logger.info(message.offset)
+  logger.info(message.value)
+end
+```
+
+</details>
