@@ -162,8 +162,52 @@ require 'kafka'
 
 kafka = Kafka.new(['localhost:9092'], client_id: 'KafkaProject', logger: Logger.new(STDOUT))
 kafka.deliver_message('Hello word!', topic: 'coucou')
-kafka.each_message(topic: "coucou") { |m| puts m.value }
+kafka.each_message(topic: 'coucou') { |m| puts m.value }
+```
 
+In `bin/console.rb`.
+```ruby
+#!/usr/bin/env ruby
+
+require 'irb'
+require 'kafka'
+
+KAFKA = Kafka.new(['localhost:9092'], client_id: 'KafkaProject', logger: Logger.new(STDOUT))
+
+IRB.start
+```
+
+</details>
+
+Deliver asynchronous messages by batches to kafka client.
+
+<details>
+  <summary>Solution</summary>
+
+```ruby
+require 'kafka'
+
+kafka = Kafka.new(['localhost:9092'], client_id: 'KafkaProject', logger: Logger.new(STDOUT))
+producer = kafka.async_producer
+
+at_exit { producer.shutdown }
+
+producer.produce('Hello world!', topic: 'coucou')
+```
+
+In `bin/console.rb`.
+```ruby
+#!/usr/bin/env ruby
+
+require 'irb'
+require 'kafka'
+
+KAFKA = Kafka.new(['localhost:9092'], client_id: 'KafkaProject', logger: Logger.new(STDOUT))
+KAFKA_PRODUCER = KAFKA_CLIENT.async_producer(delivery_threshold: 500, delivery_interval: 1, max_queue_size: 1000)
+
+at_exit { KAFKA_PRODUCER.shutdown }
+
+IRB.start
 ```
 
 </details>
