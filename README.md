@@ -20,7 +20,6 @@ In `bin/console.rb`.
 #!/usr/bin/env ruby
 
 puts 'Hello World'
-
 ```
 </details>
 
@@ -41,7 +40,6 @@ In `bin/console.rb`.
 require 'irb'
 
 IRB.start
-
 ```
 </details>
 
@@ -61,7 +59,6 @@ touch Gemfile
 source 'https://rubygems.org'
 
 gem 'ruby-kafka'
-
 ```
 </details>
 
@@ -252,6 +249,9 @@ end
 
 Launch another consumer with a different group_id
 
+<details>
+  <summary>Solution</summary>
+
 ```sh
 touch bin/other_consumer.rb
 chmod +x bin/other_consumer.rb
@@ -280,3 +280,22 @@ consumer.each_message do |message|
   logger.info(message.value)
 end
 ```
+
+</details>
+
+## Add schema validation for messages
+
+Add avro to the Gemfile
+
+<details>
+  <summary>Solution</summary>
+
+In Gemfile
+```ruby
+source 'https://rubygems.org'
+
+gem 'avro_turf'
+gem 'ruby-kafka'
+```
+
+</details>
