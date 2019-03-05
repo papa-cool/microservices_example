@@ -299,3 +299,92 @@ gem 'ruby-kafka'
 ```
 
 </details>
+
+Add schema for a person with id, full_name, professional and private contact details, favorite color and children.
+
+<details>
+  <summary>Solution</summary>
+
+In lib/avro_schemas/person.avsc
+```json
+{
+  // Base object
+  "name": "person",
+  "type": "record",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "doc": "person uuid"
+    },
+    {
+      "name": "full_name",
+      "type": "string"
+    },
+    {
+      // has_one association with an object define in another file
+      "name": "professional_contact_details",
+      "type": "contact_details"
+    },
+    {
+      // has_one association with an object define in another file
+      "name": "private_contact_details",
+      "type": "contact_details"
+    },
+    {
+      // Must be null or part of the enum
+      "name": "favorite_color",
+      "type": [
+        "null",
+        {
+          "name": "color",
+          "type": "enum",
+          "symbols": ["blue", "green", "yellow", "red"]
+        }
+      ]
+    },
+    {
+      // has_many association with a nested definition
+      "name": "children",
+      "type": {
+        "type": "array",
+        "items": [
+          {
+            "name": "child",
+            "type": "record",
+            "fields": [
+              { "name": "id", "type": "string", "doc": "child uuid" },
+              { "name": "full_name", "type": "string" },
+              { "name": "born_time", "type": "long", "doc": "Time in second." }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+In lib/avro_schemas/contact_details.avsc
+```json
+{
+  "name": "contact_details",
+  "type": "record",
+  "fields": [
+    {
+      "name": "street_number",
+      "type": "int"
+    },
+    {
+      "name": "street",
+      "type": "string"
+    },
+    {
+      "name": "city",
+      "type": "string"
+    }
+  ]
+}
+```
+
+</details>
